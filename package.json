@@ -4,15 +4,23 @@
   "description": "practice server for forms",
   "main": "server.js",
   "scripts": {
-    "test": "test"
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git"
+    "url": "https://github.com/Cflatminor/form-back"
   },
   "keywords": [
     "-"
   ],
   "author": "roman.vorontsov",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.4.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.2"
+  }
 }

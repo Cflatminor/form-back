@@ -1,14 +1,33 @@
-// NEW CONNECT! FULLY WORKING AND 3.0 +
-database.connect(uri, dbOptions, function(err, client) {
-  if (err) { throw err }
+'use strict';
 
-  const cluster = client.db("Cluster0");
+require('dotenv').config();
 
-  cluster.collection('fruits').find().toArray(function(err, result) {
-    if (err) { throw err }
+const express = require('express');
+const MongoClient = require('mongodb').MongoClient;
+const path = require('path');
+const app = express();
+const router = express.Router();
+const port = process.env.port || 8000;
 
-    response.send(result);
+const database = require('./config/database.js');
+const headers = require('./config/headers.js');
+const controllers = require('./src/controller/index.js');
+
+app.use(express.static(path.join(__dirname + '')));
+app.use(express.urlencoded({ extended: true }));
+app.use(headers);
+
+MongoClient.connect(database.url, database.options, (error, database) => {
+  if (error) return console.log(error);
+
+  app.use(controllers(router, database));
+
+  app.listen(port, () => {
+    console.log('we are on ' + port);
   });
+});
 
-  client.close();
+process.on("SIGINT", () => {
+  MongoClient.close();
+  process.exit();
 });
