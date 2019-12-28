@@ -4,8 +4,9 @@
     <data-source source="LOCAL" name="MainMongo" uuid="329849ac-9846-4613-ab92-a1e5b0e7dfb2">
       <driver-ref>mongo</driver-ref>
       <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
-      <jdbc-url>mongodb+srv://cluster0-r0bey.mongodb.net/test?retryWrites=true&amp;w=majority</jdbc-url>
+      <jdbc-url>mongodb+srv://roman:753119@cluster0-r0bey.mongodb.net/test?retryWrites=true&amp;w=majority</jdbc-url>
     </data-source>
   </component>
 </project>

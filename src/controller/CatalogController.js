@@ -1,12 +1,20 @@
+const path = require('path');
 const ObjectID = require('mongodb').ObjectID;
+const CatalogModel = require(path.resolve('src/model/CatalogModel.js'));
 
 module.exports = function(router, database) {
   /**
-   * @Route ("/", method="GET")
+   * @Route ("/catalog", method="GET")
    * @return Response
    */
-  router.get('/', (request, response, next) => {
-    response.send({a: '1'});
+  router.get('/catalog', (request, response, next) => {
+    const cluster = database.db("Cluster0");
+
+    cluster.collection('vape-juices').find().toArray(function(err, data) {
+      if (err) { throw err }
+
+      response.send(new CatalogModel(data));
+    });
   });
 
   //////////////////////////////
@@ -24,16 +32,6 @@ module.exports = function(router, database) {
   //   });
   // });
   //////////////////////////////
-
-  /**
-   * @Route ("/products/add", method="POST")
-   * @return Response
-   */
-  router.post('/products/add', (request, response, next) => {
-    // console.log(process.env.DATABASE_HOST);
-    console.log(request.body);
-    response.send('Hello');
-  });
 
   return router;
 };
