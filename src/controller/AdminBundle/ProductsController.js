@@ -27,13 +27,7 @@ module.exports = function(router, database) {
    * @Route ("/admin/products/add", method="POST")
    */
   router.post('/admin/products/add', (request, response, next) => {
-    const product = new CreateProduct({
-      brand: request.body.brand,
-      title: request.body.title,
-      price: request.body.price,
-      rating: request.body.rating,
-      isAvailable: request.body.isAvailable,
-    });
+    const product = new CreateProduct(request.body);
 
     const cluster = database.db("Cluster0");
 
