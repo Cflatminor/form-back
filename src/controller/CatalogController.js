@@ -17,22 +17,6 @@ module.exports = function(router, database) {
     });
   });
 
-  //////////////////////////////
-  // router.get('/notes/:id', (request, response, next) => {
-  //   const id = request.params.id;
-  //   const details = { '_id': new ObjectID(id) };
-  //   const cluster = database.db("Cluster0");
-  //
-  //   cluster.collection('fruits').findOne(details, (error, item) => {
-  //     if (error) {
-  //       response.send({'error':'An error has occurred'});
-  //     } else {
-  //       response.send(item);
-  //     }
-  //   });
-  // });
-  //////////////////////////////
-
   return router;
 };
 

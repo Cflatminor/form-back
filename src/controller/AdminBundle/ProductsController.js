@@ -1,6 +1,4 @@
-// const path = require('path');
 const ObjectID = require('mongodb').ObjectID;
-// const CatalogModel = require(path.resolve('src/model/CatalogModel.js'));
 
 function CreateProduct(product) {
   this.brand = product.brand;
@@ -12,12 +10,23 @@ function CreateProduct(product) {
 
 module.exports = function(router, database) {
   /**
+   * @Route ("/admin/products", method="GET")
+   */
+  router.get('/admin/products', (request, response, next) => {
+    const cluster = database.db("Cluster0");
+
+    cluster.collection('vape-juices').find().toArray(function(err, data) {
+      if (err) { throw err }
+
+      response.send(data);
+    });
+  });
+
+
+  /**
    * @Route ("/admin/products/add", method="POST")
    */
   router.post('/admin/products/add', (request, response, next) => {
-    // console.log(process.env.DATABASE_HOST);
-    console.log(request.body);
-
     const product = new CreateProduct({
       brand: request.body.brand,
       title: request.body.title,
@@ -33,6 +42,47 @@ module.exports = function(router, database) {
       .catch(err => console.error(`Failed to insert item: ${err}`));
 
     response.status(200).send('product added');
+  });
+
+
+  /**
+   * @Route ("/admin/products/edit", method="GET")
+   */
+  router.get('/admin/products/edit', (request, response, next) => {
+    const id = request.query.id;
+    const details = { '_id': new ObjectID(id) };
+    const cluster = database.db("Cluster0");
+
+    cluster.collection('vape-juices').findOne(details, (error, item) => {
+      if (error) {
+        response.send({'error':'An error has occurred'});
+      } else {
+        response.send(item);
+      }
+    });
+  });
+
+
+  /**
+   * @Route ("/admin/products/edit", method="POST")
+   */
+  router.post('/admin/products/edit', (request, response, next) => {
+    // todo updateOne
+  });
+
+
+  /**
+   * @Route ("/admin/products/delete", method="POST")
+   */
+  router.post('/admin/products/delete/:id', (request, response, next) => {
+    const id = request.params.id;
+    const details = { '_id': new ObjectID(id) };
+    const cluster = database.db("Cluster0");
+
+    cluster.collection('vape-juices').deleteOne(details)
+      .then(function() {
+        response.status(200).send('product deleted');
+      });
   });
 
   return router;
