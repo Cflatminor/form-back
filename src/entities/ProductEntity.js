@@ -11,6 +11,10 @@ class ProductEntity  {
     this.rating = product.rating;
     this.isAvailable = product.isAvailable;
   }
+
+  getTitle () {
+    return product.title;
+  }
 }
 
 module.exports = ProductEntity;

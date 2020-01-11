@@ -4,12 +4,16 @@ const ProductEntity = require(path.resolve('src/entities/ProductEntity.js'));
 
 module.exports = function(router, database) {
   const cluster = database.db("Cluster0");
+  const collection = 'vape-juices';
 
   /**
    * @Route ("/admin/products", method="GET")
    */
   router.get('/admin/products', (request, response) => {
-    cluster.collection('vape-juices').find().toArray(function(error, data) {
+    cluster
+      .collection(collection)
+      .find()
+      .toArray(function(error, data) {
       if (error) { throw err }
 
       response.send(data);
@@ -23,7 +27,9 @@ module.exports = function(router, database) {
   router.post('/admin/products/add', (request, response) => {
     const product = new ProductEntity(request.body);
 
-    cluster.collection('vape-juices').insertOne(product)
+    cluster
+      .collection(collection)
+      .insertOne(product)
       .then(result => console.log(`Success insert note! id = ${result.insertedId}`))
       .catch(error => console.error(`Failed to insert item: ${error}`));
 
@@ -37,7 +43,9 @@ module.exports = function(router, database) {
   router.get('/admin/products/edit', (request, response) => {
     const details = { '_id': new ObjectID(request.query.id) };
 
-    cluster.collection('vape-juices').findOne(details, (error, item) => {
+    cluster
+      .collection(collection)
+      .findOne(details, (error, item) => {
       if (error) {
         response.send({'error':'An error has occurred'});
       } else {
@@ -45,6 +53,7 @@ module.exports = function(router, database) {
       }
     });
   });
+
 
 
   /**
@@ -61,7 +70,9 @@ module.exports = function(router, database) {
   router.post('/admin/products/delete/:id', (request, response) => {
     const details = { '_id': new ObjectID(request.params.id) };
 
-    cluster.collection('vape-juices').deleteOne(details)
+    cluster
+      .collection(collection)
+      .deleteOne(details)
       // .then(result => console.log(`Success delete note! id = ${result.insertedId}`))
       .then(console.log('Success delete note'))
       .catch(error => console.error(`Failed to delete item: ${error}`));
