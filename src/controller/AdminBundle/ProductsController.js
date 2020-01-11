@@ -20,7 +20,6 @@ module.exports = function(router, database) {
     });
   });
 
-
   /**
    * @Route ("/admin/products/add", method="POST")
    */

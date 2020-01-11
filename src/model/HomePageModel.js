@@ -12,6 +12,7 @@ const model = {
 class HomePageModel extends BaseModel {
   constructor(data) {
     super(model);
+
     this.products = data;
   }
 }
