@@ -1,4 +1,5 @@
 const path = require('path');
+const ObjectID = require('mongodb').ObjectID;
 const CatalogModel = require(path.resolve('src/model/CatalogModel.js'));
 
 module.exports = function(router, database) {
@@ -18,6 +19,24 @@ module.exports = function(router, database) {
 
       response.send(new CatalogModel(data));
     });
+  });
+
+  /**
+   * @Route ("/catalog/:id", method="GET")
+   * @return Response
+   */
+  router.get('/catalog/:id', (request, response, next) => {
+    const details = { '_id': new ObjectID(request.params.id) };
+
+    cluster
+      .collection(collection)
+      .findOne(details, (error, item) => {
+        if (error) {
+          response.send({'error':'An error has occurred'});
+        } else {
+          response.send(item);
+        }
+      });
   });
 
   return router;
