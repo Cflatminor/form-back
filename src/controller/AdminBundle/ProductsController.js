@@ -14,10 +14,12 @@ module.exports = function(router, database) {
       .collection(collection)
       .find()
       .toArray(function(error, data) {
-      if (error) { throw err }
-
-      response.send(data);
-    });
+        if (error) {
+          throw error
+        } else {
+          response.send(data);
+        }
+      });
   });
 
   /**
@@ -32,9 +34,8 @@ module.exports = function(router, database) {
       .then(result => console.log(`Success insert note! id = ${result.insertedId}`))
       .catch(error => console.error(`Failed to insert item: ${error}`));
 
-    response.status(200).send('product added');
+    response.status(200).send('Product Added');
   });
-
 
   /**
    * @Route ("/admin/products/edit", method="GET")
@@ -45,23 +46,31 @@ module.exports = function(router, database) {
     cluster
       .collection(collection)
       .findOne(details, (error, item) => {
-      if (error) {
-        response.send({'error':'An error has occurred'});
-      } else {
-        response.send(item);
-      }
-    });
+        if (error) {
+          response.send({'error':'An error has occurred'});
+        } else {
+          response.send(item);
+        }
+      });
   });
-
-
 
   /**
    * @Route ("/admin/products/edit", method="POST")
    */
-  router.post('/admin/products/edit', (request, response, next) => {
-    // todo updateOne by get parameter
-  });
+  router.post('/admin/products/edit', (request, response) => {
+    const details = { '_id': new ObjectID(request.query.id) };
+    const product = { $set: request.body }; // todo adapter?
 
+    cluster
+      .collection(collection)
+      .updateOne(details, product, (error) => {
+        if (error) {
+          response.send({'error':'An error has occurred'});
+        } else {
+          response.status(200).send('Product Updated');
+        }
+      });
+  });
 
   /**
    * @Route ("/admin/products/delete", method="POST")
@@ -72,11 +81,10 @@ module.exports = function(router, database) {
     cluster
       .collection(collection)
       .deleteOne(details)
-      // .then(result => console.log(`Success delete note! id = ${result.insertedId}`))
-      .then(console.log('Success delete note'))
+      .then(result => console.log(`Success delete note! id = ${result.insertedId}`))
       .catch(error => console.error(`Failed to delete item: ${error}`));
 
-    response.status(200).send('product deleted');
+    response.status(200).send('Product Deleted');
   });
 
   return router;

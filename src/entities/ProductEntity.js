@@ -13,7 +13,7 @@ class ProductEntity  {
   }
 
   getTitle () {
-    return product.title;
+    return this.title;
   }
 }
 
