@@ -6,7 +6,7 @@ module.exports = function(router, database) {
    * @Route ("/", method="GET")
    * @return Response
    */
-  router.get('/', (request, response, next) => {
+  router.get('/', (request, response) => {
     response.send(new HomePageModel());
   });
 

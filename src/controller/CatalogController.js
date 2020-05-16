@@ -10,7 +10,7 @@ module.exports = function(router, database) {
    * @Route ("/catalog", method="GET")
    * @return Response
    */
-  router.get('/catalog', (request, response, next) => {
+  router.get('/catalog', (request, response) => {
     cluster
       .collection(collection)
       .find()
@@ -25,7 +25,7 @@ module.exports = function(router, database) {
    * @Route ("/catalog/:id", method="GET")
    * @return Response
    */
-  router.get('/catalog/:id', (request, response, next) => {
+  router.get('/catalog/:id', (request, response) => {
     const details = { '_id': new ObjectID(request.params.id) };
 
     cluster

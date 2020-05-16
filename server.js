@@ -28,7 +28,8 @@ MongoClient.connect(dbConfig.url, dbConfig.options, (error, database) => {
   });
 
   process.on("SIGINT", () => {
-    database.close();
-    process.exit();
+    database
+      .close()
+      .then(process.exit());
   });
 });
