@@ -13,11 +13,22 @@ module.exports = function(router, database) {
     cluster
       .collection(collection)
       .find()
+      // .limit(5)
       .toArray(function(error, data) {
         if (error) {
           throw error
         } else {
           response.send(data);
+
+          // //Page 1
+          // db.users.find().limit(pageSize);
+          // //Find the id of the last document in this page
+          // last_id = ...
+          //
+          // //Page 2
+          // users = db.users.find({'_id'> last_id}). limit(10);
+          // //Update the last id with the id of the last document in this page
+          // last_id = ...
         }
       });
   });
@@ -81,7 +92,7 @@ module.exports = function(router, database) {
     cluster
       .collection(collection)
       .deleteOne(details)
-      .then(result => console.log(`Success delete note! id = ${result.insertedId}`))
+      .then(result => console.log(`Success delete note! id = ${result.insertedId}`)) // todo undefined
       .catch(error => console.error(`Failed to delete item: ${error}`));
 
     response.status(200).send('Product Deleted');

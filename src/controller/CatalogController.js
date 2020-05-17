@@ -15,10 +15,10 @@ module.exports = function(router, database) {
       .collection(collection)
       .find()
       .toArray(function(error, data) {
-      if (error) { throw error }
+        if (error) { throw error }
 
-      response.send(new CatalogModel(data));
-    });
+        response.send(new CatalogModel(data));
+      });
   });
 
   /**
