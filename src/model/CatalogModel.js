@@ -5,7 +5,9 @@
  */
 class CatalogModel {
   constructor(data) {
-    this.products = data;
+    this.products = data.products;
+    this.pagesCount = data.pagesCount;
+    this.currentPage = data.currentPage;
   }
 }
 

@@ -17,7 +17,9 @@ module.exports = function(router, database) {
       .toArray(function(error, data) {
         if (error) { throw error }
 
-        response.send(new CatalogModel(data));
+        response.send(new CatalogModel({
+          products: data,
+        }));
       });
   });
 

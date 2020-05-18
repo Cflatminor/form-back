@@ -1,30 +1,41 @@
 const path = require('path');
 const ObjectID = require('mongodb').ObjectID;
+const CatalogModel = require(path.resolve('src/model/CatalogModel.js'));
 const ProductEntity = require(path.resolve('src/entities/ProductEntity.js'));
 
 module.exports = function(router, database) {
   const cluster = database.db("Cluster0");
   const collection = 'vape-juices';
+  let collectionSize = 0;
+
+  cluster
+    .collection(collection)
+    .countDocuments({}, (error, count) => {
+      collectionSize = count;
+    });
 
   /**
    * @Route ("/admin/products", method="GET")
    */
   router.get('/admin/products', (request, response) => {
+    let currentPage = request.query.page;
+    let itemsPerPage = 4;
+
     cluster
       .collection(collection)
-      .find()
-      // .limit(5)
+      .find({}, {
+        skip: (currentPage - 1) * itemsPerPage,
+        limit: itemsPerPage
+      })
       .toArray(function(error, data) {
         if (error) {
           throw error
         } else {
-          response.send(data);
-
-          // //Page 1
-          // db.users.find().limit(pageSize);
-          // //Find the id of the last document in this page
-          // last_id = ...
-          //
+          response.send(new CatalogModel({
+            products: data,
+            pagesCount: Math.ceil(collectionSize / itemsPerPage),
+            currentPage: currentPage,
+          }));
           // //Page 2
           // users = db.users.find({'_id'> last_id}). limit(10);
           // //Update the last id with the id of the last document in this page
