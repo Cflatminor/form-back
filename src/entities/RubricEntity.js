@@ -8,10 +8,6 @@ class RubricEntity  {
     this.title = rubric.title;
     this.products = rubric.products;
   }
-
-  getTitle () {
-    return this.title;
-  }
 }
 
 module.exports = RubricEntity;

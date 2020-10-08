@@ -5,8 +5,8 @@
  */
 class BaseModel {
   constructor(model) {
-    this.title = model.title;
-    this.breadcrumbs = [];
+    this.title = model.title || "";
+    this.breadcrumbs = model.breadcrumbs || [];
   }
 }
 
