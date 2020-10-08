@@ -13,7 +13,7 @@ class HomePageModel extends BaseModel {
   constructor(data) {
     super(model);
 
-    this.products = data;
+    this.rubric = data.rubric.products;
   }
 }
 
