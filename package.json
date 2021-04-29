@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
-  "homepage": "http://vape-shop.herokuapp.com/",
+  "homepage": "https://vape-shop.herokuapp.com/",
   "repository": {
     "type": "git",
     "url": "https://github.com/Cflatminor/form-back"
@@ -16,7 +16,7 @@
     "-"
   ],
   "engines": {
-    "node": "10.x"
+    "node": "14.x"
   },
   "author": "roman bogdanov <cflatminor92@gmail.com>",
   "license": "ISC",
@@ -24,7 +24,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongo": "^0.1.0",
-    "mongodb": "^3.4.1"
+    "mongodb": "^3.6.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
