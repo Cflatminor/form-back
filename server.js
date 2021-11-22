@@ -18,6 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(headers);
 
+app.get("/test", (req, res) => res.sendFile(
+  'view/test.html', { root: __dirname })
+);
+
 MongoClient.connect(dbConfig.url, dbConfig.options, (error, database) => {
   if (error) return console.log(error);
 
